@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="mybatis-generator.properties" />
+    <!-- !!!! Driver Class Path !!!! -->
+    <!-- classPathEntry location="C:\Users\Administrator\.IntelliJIdea2016.1\config\jdbc-drivers\mysql-connector-java-5.1.35-bin.jar"/ -->
+    <context id="CustomerContext" targetRuntime="MyBatis3">
+        <!--****************************************************************************************************-->
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+       一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖-->
+        <property name="autoDelimitKeywords" value="false"/>
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- 数据库连接信息 -->
+        <jdbcConnection driverClass="${jdbc.driverClassName}"
+                        connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />
+        <!--默认false
+           Java type resolver will always use java.math.BigDecimal if the database column is of type DECIMAL or NUMERIC.
+         -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 生成Model对象路径配置 -->
+        <javaModelGenerator targetPackage="com.shenxiangxiang.springbootsecuritydemo.entity"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 生成sqlXML mapper文件路径配置 -->
+        <!-- !!!! Mapper XML Configurations !!!! -->
+        <sqlMapGenerator targetPackage="com.shenxiangxiang.springbootsecuritydemo.mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现 -->
+        <!-- !!!! Mapper Interface Configurations !!!! -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.shenxiangxiang.springbootsecuritydemo.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!--要生成哪些表 -->
+        <!-- !!!! Table Configurations !!!! -->
+        <!--<table tableName="customers" domainObjectName="Customer">-->
+        <!--<property name="ignoreQualifiersAtRuntime" value="true"/>-->
+        <!--<property name="modelOnly" value="false"/>-->
+        <!--</table>-->
+        <table tableName="user">
+            <columnOverride column="password_hash" javaType="java.lang.String"/>
+        </table>
+        <table tableName="post"/>
+    </context>
+</generatorConfiguration>
