@@ -1,9 +1,7 @@
 package com.shenxiangxiang.springbootsecuritydemo;
 
-
 import com.shenxiangxiang.springbootsecuritydemo.entity.Customer;
 import com.shenxiangxiang.springbootsecuritydemo.repository.CustomerRepository;
-import org.owasp.esapi.ESAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,27 +10,15 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @PropertySource(ignoreResourceNotFound=false,value="classpath:application-h2.properties")
-@RestController
 @EnableAutoConfiguration
-@ComponentScan("com.shenxiangxiang.springbootsecuritydemo.controller")
-public class HelloWorld {
-    private static final Logger log = LoggerFactory.getLogger(HelloWorld.class);
-
-    @RequestMapping("/")
-    String home() {
-        String xss_payload = "<script>alert(123);</script>";
-
-        return ESAPI.encoder().encodeForHTML(xss_payload);
-    }
-
+@ComponentScan({"com.shenxiangxiang.springbootsecuritydemo.controller"})
+public class H2DemoApp {
+    private static final Logger log = LoggerFactory.getLogger(H2DemoApp.class);
     public static void main(String[] args) {
-        SpringApplication.run(HelloWorld.class, args);
+        SpringApplication.run(H2DemoApp.class, args);
     }
-
     @Bean
     public CommandLineRunner demo(CustomerRepository customerRepository) {
         return (args) -> {
